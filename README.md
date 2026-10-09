@@ -1,95 +1,170 @@
-# Geo-Attend
+<div align="center">
 
-Geo-Attend is a secure attendance tracking system that replaces traditional attendance registers with secure geofencing and biometric authentication. The application ensures that employees can only log attendance when physically present inside verified organization premises and verified using biometric details.
+# 📍 Geo-Attend
 
-## Core Features
+### Next-Generation Geofenced & Biometric Attendance Management System
 
-- **Geofenced Verification:** Restricts clock-in and clock-out operations to predefined campus boundaries.
-- **Biometric Authentication:** Face and fingerprint authentication validation to prevent proxy attendance.
-- **Support & Feedback Desk:** Integrated support request ticket channels and feedback collection.
-- **Admin Dashboard:** Dynamic Web UI to manage campus geofences, register/manage employees, review support tickets, and view detailed audit action logs.
-- **Security Audit Logs:** Complete admin action audit history log tracking all modifications.
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-18.0-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Android](https://img.shields.io/badge/Android-Java_Native-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://developer.android.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14.0-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![OpenCV](https://img.shields.io/badge/OpenCV-YuNet%2FSFace-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white)](https://opencv.org/)
 
----
+[Features](#-key-features) • [Architecture](#-system-architecture) • [Setup Guide](SETUP.md) • [Database Schema](database.md) • [Project Structure](#-project-structure)
 
-## Tech Stack
-
-- **Frontend:** React.js, Tailwind CSS / Vanilla CSS, Vite.js
-- **Backend:** FastAPI (Python), SQLAlchemy ORM, Pydantic
-- **Database:** PostgreSQL
-- **Mobile Client:** Android Native App (Java)
+</div>
 
 ---
 
-## Database Models
+## 📖 Overview
 
-The database contains 9 primary model tables representing organization data, users, and logs:
+**Geo-Attend** is an enterprise-grade attendance tracking solution designed to eliminate attendance fraud, proxy check-ins, and manual record-keeping. By combining **GPS Geofencing** (Haversine boundary verification) with **Biometric Authentication** (Android Hardware Fingerprint & OpenCV YuNet/SFace Face Recognition), Geo-Attend guarantees that attendance can only be logged when an employee is physically verified within authorized organizational boundaries.
 
-1. **`InstitutionalDomain`:** Whitelists allowed email domains (e.g., `nitc.ac.in`, `gmail.com`).
-2. **`User`:** Stores administrator and employee credentials, phone numbers, and biometric keys.
-3. **`CampusBoundary`:** Manages active geofence zones, specifying the center coordinate (latitude/longitude) and allowance radius (meters).
-4. **`AttendanceLog`:** Tracks daily shift logs, storing check-in and check-out naive timestamps, calculated distances from geofence center, and statuses (`verified`/`rejected`).
-5. **`BiometricUpdateRequest`:** Manages employee requests to register or reset face/fingerprint biometric profiles.
-6. **`OTPCode`:** Stores generated OTP verification codes for registration and password resets.
-7. **`Feedback`:** Records system feedbacks submitted by employee users.
-8. **`SupportRequest`:** Manages customer support queries, ticket statuses (`pending`/`replied`), and admin replies.
-9. **`AdminActionLog`:** Stores read-only audit logs of admin database actions (additions, updates, deletions).
+The platform provides a complete ecosystem consisting of a **Native Android Client App** for field/office employees, a **FastAPI REST Service** for real-time verification and machine learning inference, and a modern **React Web Dashboard** for administrative supervision and support desk resolution.
 
 ---
 
-## Getting Started
+## ✨ Key Features
 
-### 1. Database Setup
+- 🌐 **Haversine Geofence Verification:** Restricts attendance actions to dynamically managed campus boundaries and radius thresholds (meters).
+- 👤 **Biometric Protection:** Integrates mobile fingerprint APIs and server-side facial recognition via OpenCV YuNet & SFace models to prevent proxy check-ins.
+- 📊 **Real-Time Admin Dashboard:** Comprehensive React web console to view live attendance logs, register users, set campus parameters, and monitor security events.
+- 🎫 **Support & Feedback Desk:** Built-in ticketing engine enabling employees to submit support queries and feedback directly to administrators.
+- 🛡️ **Immutable Security Audit Logs:** Automatic tracking of administrative database modifications (`AdminActionLog`) for regulatory compliance.
+- ✉️ **OTP & Domain Authorization:** Institutional email domain whitelisting combined with one-time password (OTP) verification challenges for registration and password recovery.
 
-Ensure PostgreSQL is running locally.
+---
 
-1. **Configure Connection:** Adjust the `DATABASE_URL` environment variable or edit the default connection string in [database.py](file:///c:/Projects/Geo-Attend/scripts/database.py#L37):
-   ```python
-   DATABASE_URL = "postgresql://postgres:YOUR_PASSWORD@localhost/your_db_name"
-   ```
-2. **Initialize Schema & Seed Mock Data:** Recreate all tables and seed the database with mock records (includes 50+ users and past-week shift logs):
-   ```bash
-   python scripts/recreate_db.py
-   python scripts/seed_data.py
-   ```
+## 📐 System Architecture
 
-### 2. Backend Setup
+Geo-Attend follows a modular, 4-tier architectural blueprint:
 
-1. **Navigate to backend and create virtual environment:**
-   ```bash
-   cd backend
-   python -m venv venv
-   ```
-2. **Activate the environment:**
-   - **Windows:** `venv\Scripts\activate`
-   - **macOS/Linux:** `source venv/bin/activate`
-3. **Install dependencies:**
-   ```bash
-   pip install fastapi uvicorn sqlalchemy psycopg2-binary pydantic
-   ```
-4. **Run FastAPI Server:**
-   ```bash
-   uvicorn main:app --reload
-   ```
-   API docs will be available at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
+```mermaid
+graph TD
+    classDef client fill:#d4ebf2,stroke:#333,stroke-width:2px;
+    classDef gateway fill:#f9e79f,stroke:#333,stroke-width:2px;
+    classDef logic fill:#d5f5e3,stroke:#333,stroke-width:2px;
+    classDef storage fill:#f5cba7,stroke:#333,stroke-width:2px;
 
-### 3. Frontend Setup
+    subgraph Client_Layer [Client Tier]
+        A[Android Mobile App: Java]:::client
+        B[Web Admin Dashboard: React.js]:::client
+    end
 
-1. **Navigate to frontend folder:**
-   ```bash
-   cd ../frontend
-   ```
-2. **Install modules:**
-   ```bash
-   npm install
-   ```
-3. **Run Dev Web Server:**
-   ```bash
-   npm run dev
-   ```
-   The dashboard runs at [http://localhost:5173/](http://localhost:5173/).
+    subgraph Auth_Gateway [Backend Entry & Auth]
+        C[FastAPI REST API Service]:::gateway
+        D[OAuth 2.0 / Email Auth]:::gateway
+        OTP[OTP Verification Engine]:::gateway
+    end
 
-### 4. Mobile Client
+    subgraph Core_Logic [Core Logic Engine]
+        E[Haversine Geofence Validator]:::logic
+        F[YuNet / SFace Biometric Engine]:::logic
+    end
 
-- Locate the Android studio project in the `mobile/` directory.
-- Build and run on an Android Device / Emulator.
+    subgraph Data_Storage [Data Storage Tier]
+        G[(PostgreSQL Database)]:::storage
+    end
+
+    A -->|Submit GPS & Biometrics| C
+    B -->|Manage Geofences & Audit Logs| C
+    C -->|Authenticate Domain/Login| D
+    C -->|Validate Geofence Coordinates| E
+    C -->|Face/Finger Verification| F
+    E <-->|Query Campus Boundaries| G
+    F <-->|Validate Biometric Profiles| G
+    D <-->|Persist Logs & User State| G
+```
+
+For an in-depth architectural breakdown, refer to [architecture.md](architecture.md).
+
+---
+
+## 🗄️ Database Models
+
+Geo-Attend utilizes a structured PostgreSQL database containing 9 core relational tables:
+
+| Model Table | Purpose |
+|---|---|
+| **`InstitutionalDomain`** | Whitelists authorized institutional email domains (e.g., `nitc.ac.in`) |
+| **`User`** | Manages employee & admin accounts, hashed credentials, and biometric profiles |
+| **`CampusBoundary`** | Stores dynamic geofence zones, center coordinates (lat/long), and radius bounds |
+| **`AttendanceLog`** | Tracks daily clock-in/out timestamps, distance calculations, and verification statuses |
+| **`BiometricUpdateRequest`** | Audits employee requests to update or reset biometric key profiles |
+| **`OTPCode`** | Manages time-sensitive verification challenges for registration & password resets |
+| **`SupportRequest`** | Handles customer/employee support tickets and administrator resolution replies |
+| **`Feedback`** | Collects user system feedback and satisfaction metrics |
+| **`AdminActionLog`** | Unalterable audit trail recording all administrative database modifications |
+
+For detailed schema definitions, foreign key constraints, and field types, refer to [database.md](database.md).
+
+---
+
+## 📂 Project Structure
+
+```
+Geo-Attend/
+├── backend/                  # FastAPI REST API & Biometric CV Service
+│   ├── main.py               # Main application entry & REST routes
+│   └── models/               # OpenCV YuNet & SFace ONNX models
+├── frontend/                 # React + Vite Admin Web Dashboard
+│   ├── src/                  # Components, Pages, and Styling
+│   └── index.html            # Web application container
+├── mobile/                   # Native Android Mobile Client (Java)
+│   ├── app/src/main/java/    # Android Activity & Helper classes
+│   └── app/src/main/res/     # UI Layouts, Animations, and Vector Drawables
+├── scripts/                  # Database management & seed scripts
+│   ├── database.py           # SQLAlchemy database configuration
+│   ├── recreate_db.py        # Table initialization script
+│   ├── seed_data.py          # Data seeding script
+│   └── clear_data.py         # Database reset script
+├── architecture.md           # System Architecture documentation
+├── database.md               # Database Schema specifications
+├── SETUP.md                  # Comprehensive Installation & Setup Guide
+└── README.md                 # Project Overview & Overview
+```
+
+---
+
+## 🚀 Quick Start & Setup
+
+To install and run Geo-Attend locally across all services (Database, Backend, Frontend, and Mobile), follow our detailed step-by-step setup guide:
+
+👉 **[Read the Full Setup Guide (SETUP.md)](SETUP.md)**
+
+### Quick Command Reference
+
+```bash
+# 1. Database Setup
+python scripts/recreate_db.py
+python scripts/seed_data.py
+
+# 2. Backend Service
+cd backend
+python -m venv venv && source venv/bin/activate  # or venv\Scripts\activate on Windows
+pip install -r requirements.txt (or fastapi uvicorn sqlalchemy psycopg2-binary pydantic opencv-python)
+uvicorn main:app --reload
+
+# 3. Web Dashboard
+cd ../frontend
+npm install
+npm run dev
+
+# 4. Mobile Client
+# Open the mobile/ directory in Android Studio, sync Gradle, and run on emulator/device.
+```
+
+---
+
+## 📄 Documentation Links
+
+- 📘 [Setup & Installation Guide](SETUP.md)
+- 📐 [System Architecture Specification](architecture.md)
+- 🗄️ [Database Schema & Models Specification](database.md)
+
+---
+
+## 🛡️ License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
