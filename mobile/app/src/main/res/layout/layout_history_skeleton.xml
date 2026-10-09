@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Faux Month Header Title -->
+    <View
+        android:layout_width="180dp"
+        android:layout_height="28dp"
+        android:layout_gravity="center"
+        android:background="@color/skeleton_bg"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Faux Subtitle Descriptor -->
+    <View
+        android:layout_width="240dp"
+        android:layout_height="14dp"
+        android:layout_gravity="center"
+        android:background="@color/skeleton_bg"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Faux CalendarDay Outer Grid Card Background -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:layout_marginBottom="24dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardBackgroundColor="@color/skeleton_card_bg">
+        <!-- Inside remains naturally greyed out simulating standard loading frame -->
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Faux Metrics Summary Blocks -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"
+            android:background="@color/skeleton_bg"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:background="@color/skeleton_bg"/>
+    </LinearLayout>
+</LinearLayout>

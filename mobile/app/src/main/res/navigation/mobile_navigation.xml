@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nav_home_pulse">
+
+    <fragment
+        android:id="@+id/nav_home_pulse"
+        android:name="com.example.geoattend.HomeFragment"
+        android:label="ZenFlow Home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_attendance_history"
+        android:name="com.example.geoattend.HistoryFragment"
+        android:label="Attendance Logs"
+        tools:layout="@layout/fragment_history" />
+
+    <fragment
+        android:id="@+id/nav_profile_security"
+        android:name="com.example.geoattend.ProfileFragment"
+        android:label="My Profile"
+        tools:layout="@layout/fragment_profile" />
+
+</navigation>

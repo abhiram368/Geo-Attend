@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 1. The Pulse Map tracking view from image_688dbe.jpg -->
+    <item
+        android:id="@+id/nav_home_pulse"
+        android:icon="@drawable/ic_location_on"
+        android:title="Main" />
+
+    <!-- 2. Logs, hours worked, and past punch metrics -->
+    <item
+        android:id="@+id/nav_attendance_history"
+        android:icon="@drawable/ic_history"
+        android:title="History" />
+
+    <!-- 3. Account data, settings, and secure/support portals -->
+    <item
+        android:id="@+id/nav_profile_security"
+        android:icon="@drawable/ic_person"
+        android:title="Profile" />
+
+</menu>

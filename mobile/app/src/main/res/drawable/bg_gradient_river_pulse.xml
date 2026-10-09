@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/pulse_state">
+        <shape android:shape="rectangle">
+            <corners android:radius="16dp" />
+            <gradient
+                android:startColor="#0058BE"
+                android:centerColor="#8A2BE2"
+                android:endColor="#D14343"
+                android:type="linear"
+                android:angle="0" />
+        </shape>
+    </item>
+</animated-selector>
