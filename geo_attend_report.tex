@@ -1,0 +1,385 @@
+\documentclass[12pt]{report}
+\usepackage{flushend}
+\usepackage{graphicx}
+\usepackage{bbding}
+\usepackage{geometry}
+%\usepackage{amssymb} % For the checkbox symbol
+%\usepackage{array}
+\usepackage[noadjust]{cite}
+\usepackage[toc,acronym,description,sort=def]{glossaries}
+\usepackage{sectsty}
+\usepackage{setspace}
+\usepackage{enumerate}
+\usepackage{IEEEtrantools}
+\usepackage{paralist}
+\usepackage{chngcntr}
+\usepackage{xcolor}
+\usepackage{ftnxtra}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{ragged2e}
+\counterwithout{footnote}{chapter}
+%\usepackage[top=1.4 in]{geometry}
+\algnewcommand{\LeftComment}[1]{\Statex \(\triangleright\) #1}
+\renewcommand{\bibname}{References}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\chapterfont {\centering}
+\pagestyle{headings}
+\newenvironment{ACKNOWLEDGEMENT}{\chapter*{ACKNOWLEDGEMENT}}{}
+\newenvironment{ABSTRACT}{\chapter*{ABSTRACT}}{}
+\onehalfspacing
+
+%************Glossary*************%
+
+\makeglossaries
+
+\newglossaryentry{dna}
+{
+    name=DNA,
+    description={Deoxyribo Nucleic Acid, a molecule that codes genetic instructions in living organisms. It is a \emph{string} of 4 `nucleotides' - Nitrogen containing bases: Cytosine (C), Guanine (G), Adenine (A), and Thymine (T)}
+}
+
+\newglossaryentry{geofencing}
+{
+    name=Geofencing,
+    description={A location-based service in which an app uses GPS, RFID, Wi-Fi or cellular data to trigger a pre-programmed action when a mobile device enters or exits a virtual boundary setup around a geographical location}
+}
+
+\newglossaryentry{biometrics}
+{
+    name=Biometrics,
+    description={Biological measurements or physical characteristics that can be used to identify individuals, such as fingerprint mapping or facial recognition}
+}
+
+\newglossaryentry{restapi}
+{
+    name=REST API,
+    description={Representational State Transfer Application Programming Interface, an architectural style for providing standards between computer systems on the web}
+}
+ 
+%********End of Glossary**********%
+
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+\vspace{1cm}
+\huge
+\textbf{Geo-Attend: Secure Geofenced and Biometric Attendance Tracking System}\\
+\normalsize
+\vspace{1.5cm}
+\textbf{Summer Internship Report}\\
+\vspace{1cm}
+\emph{Submitted by}\\        
+\vspace{0.5cm}
+\begin{tabular}{ccc}
+\textbf{\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ }\\
+\textbf{(Roll No. \_\_\_\_\_\_\_\_\_\_)}\\
+\end{tabular}\\
+\vspace{0.8cm}
+\textit{In partial fulfillment for the award of the Degree of}\\
+\vspace{0.8cm}
+BACHELOR OF TECHNOLOGY\\
+IN\\
+COMPUTER SCIENCE \& ENGINEERING\\
+\vspace{1cm}
+\begin{center}
+ % Make sure nitc-logo.png is uploaded to your Overleaf project
+ \includegraphics[width=0.2\textwidth]{nitc-logo.png} 
+\end{center}
+\vspace{1cm}
+\text{DEPARTMENT OF COMPUTER SCIENCE \& ENGINEERING }\\
+\textbf{NATIONAL INSTITUTE OF TECHNOLOGY CALICUT}\\
+\textbf{NIT CAMPUS P.O., CALICUT}\\
+\textbf{KERALA, INDIA 673601}
+\vspace{0.8cm}
+\end{center}
+\end{titlepage}
+\pagenumbering{roman}
+{
+
+\newpage
+% ==========================================
+% 2. CERTIFICATE PAGE (NIT Calicut)
+% ==========================================
+\clearpage
+\thispagestyle{empty} % Removes page numbers and headers for this specific page
+
+\begin{center}
+    % Elegant Header
+ \textcolor{red}{\large (Certificate format for students doing summer internship at NIT Calicut) }\\
+
+ {\large NATIONAL INSTITUTE OF TECHNOLOGY CALICUT} \\
+ {\large COMPUTER SCIENCE \& ENGINEERING}\\
+ \vspace{0.75cm}
+
+ \includegraphics[width=0.2\textwidth]{nitc-logo.png} 
+ 
+ \vspace{0.6cm}
+
+ {\LARGE  \textbf{CERTIFICATE}} \\[1.5cm]
+\end{center}
+    
+\noindent This is to certify that the summer internship report entitled \textcolor{red}{Geo-Attend: Secure Geofenced and Biometric Attendance Tracking System} is a bona fide record of the summer internship done by Mr./Ms. \_\_\_\_\_ (Roll No.  \_\_\_\_\_) at \_\_\_\_\_ during the period \_\_\_\_\_ to \_\_\_\_\_ under my/our supervision, in partial fulfilment of the requirements for the award of the degree of Bachelor of Technology in Computer Science \& Engineering.  
+
+% Signature Block
+\begin{flushleft}
+    \begin{minipage}{0.7\textwidth}
+        \vspace{0.6cm}
+        \textcolor{black}{Name \& Signature of faculty mentor(s)} \\
+        \textcolor{black}{Designation} \& 
+        \textcolor{black}{Department} \\
+        NIT Calicut
+        \vspace{0.2cm}
+    \end{minipage}
+\end{flushleft}
+
+\begin{flushright}
+    \begin{minipage}{0.45\textwidth}
+        \vspace{1 cm}
+        \textcolor{black}{Name \& Signature of HoD\\ Computer Science \& Engineering} \\
+        NIT Calicut
+        \vspace{0.2cm}
+    \end{minipage}
+\end{flushright}
+
+\begin{flushleft}
+Date:
+\end{flushleft}
+
+% ==========================================
+% 2. CERTIFICATE PAGE (Industry)
+% ==========================================
+\clearpage
+\thispagestyle{empty} % Removes page numbers and headers for this specific page
+
+\begin{center}
+    % Elegant Header
+ \textcolor{red}{\large (Certificate format for student doing summer internship at Industry) }\\
+{\large NATIONAL INSTITUTE OF TECHNOLOGY CALICUT} \\
+ {\large COMPUTER SCIENCE \& ENGINEERING}\\
+ \vspace{0.75cm}
+
+ \includegraphics[width=0.2\textwidth]{nitc-logo.png} 
+ 
+ \vspace{0.6cm}
+
+ {\LARGE  \textbf{CERTIFICATE}} \\[1.5cm]
+\end{center}
+    
+\noindent This is to certify that the summer internship report entitled \textcolor{red}{Geo-Attend: Secure Geofenced and Biometric Attendance Tracking System} is a bona fide record of the summer internship done by Mr./Ms. \_\_\_\_\_ (Roll No.  \_\_\_\_\_) at \_\_\_\_\_ during the period \_\_\_\_\_ to \_\_\_\_\_ under my/our supervision, in partial fulfilment of the requirements for the award of the degree of Bachelor of Technology in Computer Science \& Engineering.  
+
+% Signature Block
+\begin{flushleft}
+    \begin{minipage}{0.7\textwidth}
+        \vspace{0.6cm}
+        \textcolor{black}{Name \& Signature of the Internship Coordinator} \\
+        \textcolor{black}{Designation}\\
+        Computer Science \& Engineering \\
+        NIT Calicut
+        \vspace{0.2cm}
+    \end{minipage}
+\end{flushleft}
+
+\begin{flushright}
+    \begin{minipage}{0.45\textwidth}
+        \vspace{0.2cm}
+        \textcolor{black}{Name \& Signature of HoD\\ Computer Science \& Engineering} \\
+        NIT Calicut
+        \vspace{0.2cm}
+    \end{minipage}
+\end{flushright}
+
+\begin{flushleft}
+Date:
+\end{flushleft}
+
+%=================================
+%Page for attaching certificate from industry in the prescribed format
+%==================================
+\newpage
+\textcolor{red}{(Add the certificate issued by the industry/organization here, if
+applicable. This page is not required for students undertaking their internship at NIT Calicut)}
+
+\begin{center}
+    {\LARGE \bfseries CERTIFICATE OF INTERNSHIP} \\[2.5em]
+\end{center}
+
+\begin{large}
+    \begin{tabular}{@{} p{5.5cm} c p{8.5cm} @{}}
+        Name of the Intern & : & \hrulefill \\
+        
+        Name of the Organisation  & : & \hrulefill \\
+        
+        Internship Period & : & \hrulefill ~ \textbf{to} ~ \hrulefill \\
+        
+        Internship Mode ( \Checkmark one) & : & $\square$ Online \quad $\square$ Offline \quad $\square$ Hybrid \\
+        
+        Title of the Project / \newline Details of work done & : & \hrulefill \\
+         & & \small\textit{(May attach additional sheet if necessary)} \\
+         
+        Project Manager/Mentor & : & \hrulefill \\
+        
+        Designation & : & \hrulefill \\
+        
+        Official Email & : & \hrulefill \\
+        
+        Contact No. & : & \hrulefill \\
+    \end{tabular}
+\end{large}
+
+\vspace{3em}
+
+\noindent \large Certified that the intern has satisfactorily completed the work assigned.
+
+\vspace{5em}
+
+\begin{large}
+    \begin{tabular}{{} p{6.5cm} {2cm} p{6.5cm} {}}
+        \hrulefill & & \hrulefill \\
+        \textbf{Signature with date} & & \textbf{Office Seal} \small\textit{(if available)} \\
+    \end{tabular}
+\end{large}
+
+\newpage
+\begin{ACKNOWLEDGEMENT}
+First and foremost, I would like to express my sincere gratitude to my internship mentor and the Department of Computer Science \& Engineering at the National Institute of Technology Calicut for providing me with this opportunity to work on the Geo-Attend application. Their guidance, technical insights, and continuous support have been instrumental in the successful completion of this project.
+
+I am also thankful to the head of the department and all the faculty members who provided constructive feedback during the course of the internship. Their advice helped shape the technical architecture and security mechanisms of the system. Finally, I would like to thank my peers and family for their constant support throughout this internship.
+\end{ACKNOWLEDGEMENT}
+\newpage 
+\begin{ABSTRACT}
+Traditional attendance tracking methods, such as paper registers, card scanning, and basic sign-in portals, suffer from security loop-holes like buddy punching and proxy marking. This report introduces \textbf{Geo-Attend}, a secure, modern attendance tracking system that replaces physical records with geofencing constraints and biometric verification. The system combines an Android mobile client, a web administration dashboard, and a FastAPI backend powered by PostgreSQL. Users are permitted to register check-in and check-out events only when physically located within predefined geofenced boundaries, which are verified using the Haversine formula on client-reported GPS coordinates. Additionally, biometric validation is enforced on the device and validated against user records. Administrators manage active organizational boundaries, register new user profiles, respond to support tickets, and audit security actions through the React-based web dashboard. Experimental seeding and validation prove that the system effectively prevents fraudulent attendance while maintaining low response latency.
+\end{ABSTRACT}
+
+\tableofcontents
+\addtocontents{toc}{\vskip-30pt}
+\listoffigures
+\listoftables
+\vspace{-2 em}
+\printglossary[nonumberlist]
+
+\pagenumbering{arabic}
+
+\chapter{Introduction}
+This chapter provides an introduction to the Geo-Attend system and outlines the context, objectives, and scope of the summer internship.
+
+\section{Summer Internship Overview}
+The summer internship was undertaken at the Department of Computer Science \& Engineering, National Institute of Technology Calicut. The primary goal of this internship was to design and implement a secure, modern, and reliable attendance tracking platform named \textbf{Geo-Attend}. The project was developed to replace vulnerable, manual, or paper-based systems with a digital solution using geographic constraints and biometric authentication.
+
+\section{Objectives of the Internship}
+The main objectives of this project are as follows:
+\begin{itemize}
+    \item \textbf{Prevent Proxy Attendance:} Develop verification flows that combine geofencing restrictions and biometric checks to ensure physical presence.
+    \item \textbf{Build a Robust REST Backend:} Create a scalable, high-performance API server using Python and FastAPI to validate user actions, manage boundaries, and verify locations.
+    \item \textbf{Design a Management Dashboard:} Develop an administrative web application using React.js and styling tools to configure campus geofences, register users, audit logs, and resolve support requests.
+    \item \textbf{Ensure Security Auditing:} Build a read-only logging engine to record all administrative modifications for accountability.
+\end{itemize}
+
+\section{Scope of Work}
+The scope of work encompasses:
+\begin{enumerate}
+    \item Designing the relational database schema representing organizational domains, user credentials, geographic boundaries, and verification logs.
+    \item Developing backend endpoints in Python with FastAPI, implementing location validation using the Haversine formula.
+    \item Designing and developing the React.js web portal for managing organization boundaries and user support channels.
+    \item Validating database models with realistic seeded data containing representative boundary configurations and attendance logs.
+\end{enumerate}
+
+
+\chapter{Technical Background and Training}
+
+\section{State-of-the-Art}
+Existing attendance tracking systems widely employ RFID cards, barcodes, QR codes, or manual signature registers. While simple to deploy, they suffer from significant security risks:
+\begin{itemize}
+    \item \textbf{Buddy Punching:} Coworkers can easily exchange cards, barcodes, or passcodes to check in on behalf of absent colleagues.
+    \item \textbf{Location Spoofing:} Standard web-based logins allow check-ins from anywhere unless network restrictions are hardcoded.
+\end{itemize}
+Geo-Attend leverages a combination of \gls{geofencing} and \gls{biometrics} to establish a zero-trust model for check-ins. By validating client coordinates against the coordinates of campus boundaries and verifying identity using biometric credentials, it guarantees that check-ins only happen when an authenticated individual is physically present inside the designated area.
+
+\section{Tools and Training Received}
+To develop this application, training was received in the following modern technologies:
+\begin{description}
+    \item[FastAPI:] A high-performance Python web framework used for building the REST API server, utilizing Pydantic for validation and SQLAlchemy as the ORM.
+    \item[React.js:] A frontend library used for constructing the reactive dashboard user interface, allowing real-time state management and visual updates.
+    \item[PostgreSQL:] A robust, open-source relational database management system used to store and query the system tables.
+    \item[Android SDK:] The development ecosystem used to build the native client in Java, utilizing location and biometric security API sets.
+\end{description}
+
+
+\chapter{Work Done}
+
+\section{Project Description}
+Geo-Attend is divided into three tiers: a client tier consisting of an Android native client and a web dashboard, an API entry tier serving REST endpoints with FastAPI, and a database layer using PostgreSQL. The components communicate via HTTPS requests.
+
+\section{Methodology}
+When an employee attempts to log attendance, the following process is executed:
+\begin{algorithm}
+\caption{Attendance Log Geofence Verification}
+\begin{algorithmic}[1]
+\Require User coordinates $(lat_{dev}, lon_{dev})$, Campus Boundary center $(lat_{c}, lon_{c})$, Boundary Radius $R$
+\Ensure Verification Status (\textbf{verified} or \textbf{rejected})
+\State $d \leftarrow \text{HaversineFormula}((lat_{dev}, lon_{dev}), (lat_{c}, lon_{c}))$
+\If{$d \le R$}
+    \State \Return \textbf{verified}
+\Else
+    \State \Return \textbf{rejected}
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+The physical distance is calculated using the Haversine formula:
+\begin{equation}
+d = 2r \arcsin\left(\sqrt{\sin^2\left(\frac{\Delta \phi}{2}\right) + \cos(\phi_1)\cos(\phi_2)\sin^2\left(\frac{\Delta \lambda}{2}\right)}\right)
+\end{equation}
+where $r$ is the earth radius ($6371$ km), $\phi$ represents latitudes, and $\lambda$ represents longitudes in radians.
+
+\section{Implementation/Tasks Performed}
+During the development phase, the following tasks were completed:
+\begin{itemize}
+    \item Defined the primary models: \texttt{InstitutionalDomain}, \texttt{User}, \texttt{CampusBoundary}, \texttt{AttendanceLog}, \texttt{BiometricUpdateRequest}, \texttt{OTPCode}, \texttt{Feedback}, \texttt{SupportRequest}, and \texttt{AdminActionLog}.
+    \item Configured the SQLAlchemy relationships allowing proper foreign key lookups between tables.
+    \item Implemented the core distance calculation logic on the FastAPI backend, storing calculated distances and timestamps in the database.
+    \item Developed React routes for administrators to manage geofenced locations, view check-in logs, and reply to employee support requests.
+\end{itemize}
+
+\section{Results and Observations}
+The system was tested with simulated location parameters and seeded logs. The distance calculation matches physical benchmarks. GPS calculations successfully reject check-ins situated outside the allowance radius (typically 50 meters), recording them with a status of \texttt{rejected} for admin review. The dashboard accurately renders coordinates and updates logs in real-time.
+
+
+\chapter{Learning Outcomes and Challenges}
+
+\section{Skills Acquired}
+Through the design and construction of Geo-Attend, several valuable technical skills were gained:
+\begin{itemize}
+    \item Full-stack web application development combining React.js and Python FastAPI.
+    \item Implementation of relational database schemas and object-relational mapping using SQLAlchemy.
+    \item Understanding of geospatial calculations and their integration within backend verification workflows.
+    \item Working with user identity and security auditing strategies.
+\end{itemize}
+
+\section{Challenges Faced and Solutions}
+The primary challenges encountered during development included:
+\begin{description}
+    \item[GPS Drift and Precision:] Inconsistent GPS coordinates reported by mobile devices inside building structures could lead to false rejections. This was solved by configuring a configurable buffer radius (allowance radius) stored in the \texttt{CampusBoundary} table, allowing adjustments based on signal strength.
+    \item[Secure Biometric Verification:] Handling biometric templates securely without storing raw biometric profiles on the server. This was resolved by validating signatures locally using key pairs, keeping public keys on the backend and storing biometric structures securely on-device.
+\end{description}
+
+
+\chapter{Conclusion and Future Scope}
+The Geo-Attend application successfully implements a reliable and fraud-resistant attendance system. By combining geofenced verification and biometrics, it eliminates the risks associated with proxy attendance marking. The system dashboard provides administrative oversight while keeping security audits complete.
+
+Future enhancements for the Geo-Attend system include:
+\begin{itemize}
+    \item \textbf{Offline Mode:} Support offline caching of attendance check-ins using local cryptographic signatures, syncing to the server once internet connectivity is restored.
+    \item \textbf{Advanced Facial Analysis:} Integration of server-side lightweight face verification models (such as YuNet and SFace) to confirm the user identity using high-resolution images.
+    \item \textbf{Cross-Platform Client:} Porting the Android client to a multi-platform framework such as Flutter to support iOS devices.
+\end{itemize}
+
+\addcontentsline{toc}{chapter}{References}
+
+\bibliographystyle{ieeetr}
+\bibliography{project.bib}
+
+\end{document}

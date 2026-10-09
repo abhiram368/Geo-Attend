@@ -1,0 +1,125 @@
+\documentclass{beamer}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{verbatim}
+\graphicspath{ {./images/} }
+\usepackage{tikz}
+\usetikzlibrary{shapes.multipart}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[document]{ragged2e}
+
+\usetheme{Madrid}
+\usepackage{booktabs}
+\usepackage{tabularx}   % For adjustable column widths
+\usepackage{geometry}   % For better page margins (optional)
+\usepackage{array}      % For column formatting
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\usepackage[style=numeric]{biblatex} % or choose another style
+\addbibresource{bib.bib} % your .bib file name
+
+% --- Fix for the "(GeoAttend)" footer issue ---
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor~~\insertshortinstitute
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+% ----------------------------------------------
+
+%___________________________________________________________________
+\begin{document}
+
+% 1
+\title[GeoAttend]{GeoAttend: Geofenced Biometric Attendance   \\ \small}
+\author[Katta Abhiram]{Katta Abhiram \\ \footnotesize Roll No. B230669CS \\ Summer Internship Presentation}
+\institute[NIT Calicut]{ 
+\vspace{7pt}
+
+\begin{center}
+% Ensure you have nitc-logo.png in your images folder
+ \includegraphics[width=0.12\textwidth]{nitc-logo.png}
+\end{center}
+Department of Computer Science \& Engineering,\\
+National Institute of Technology Calicut.}
+\date{August 3rd, 2026}
+\frame{\titlepage}
+
+% 2
+\begin{frame}{Introduction}
+  \begin{itemize}
+      \item \textbf{Geo-Attend} is a digital, secure client-server platform designed to replace manual, vulnerable, or paper-based attendance registers.
+      \item It establishes a \textbf{zero-trust environment} by combining geographic constraints and biometric authentication to verify both location and identity.
+      \item The system consists of three integrated interfaces:
+      \begin{itemize}
+          \item \textbf{Android Client (Java):} Employee application utilizing device GPS coordinates and biometric APIs (fingerprint/face) for verification.
+          \item \textbf{Web Dashboard (React.js):} Administrative console for managing geofences, auditing logs, and handling employee support requests.
+          \item \textbf{FastAPI REST Backend:} A Python-based server with a PostgreSQL database storing user, domain, geofence, and auditing tables.
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+% 3
+\begin{frame}{Background / Literature Survey}
+  Traditional attendance systems (such as RFID cards, physical registers, barcodes, and standard web forms) are easy to deploy but pose severe security risks:
+  
+  \begin{itemize}
+    \item \textbf{Buddy Punching:} Colleagues can easily exchange ID cards, share passwords, or scan barcode images to check in for absent coworkers.
+    \item \textbf{Location Spoofing:} Basic web portals or mobile forms allow check-ins from any location unless strict network or location constraints are enforced.
+    \item \textbf{Administrative Vulnerabilities:} Manual databases lack clear, unalterable audits for check-in modifications and geofence updates.
+  \end{itemize}
+  Geo-Attend addresses these vulnerabilities by coupling location boundaries with on-device biometrics to guarantee physical presence.
+\end{frame}
+
+% 4
+\begin{frame}{Problem Statement}
+  To resolve the limitations of traditional systems, we must ensure that employees are physically present and authenticated when marking attendance.
+  
+  \vspace{6pt}
+  \textbf{Key Project Objectives:}
+  \begin{itemize}
+      \item \textbf{Geofence Validation:} Establish configurable virtual circular zones around premises using coordinates (latitude, longitude) and specific radii.
+      \item \textbf{Identity Attestation:} Validate identity on-device using Android's biometric hardware APIs and server-side public-key verification.
+      \item \textbf{GPS Drift Correction:} Design adjustable geofence allowance radii to mitigate GPS signal degradation inside concrete building structures.
+      \item \textbf{Tamper-Proof Auditing:} Record administrative data mutations in a read-only audit log database for organizational accountability.
+  \end{itemize}
+\end{frame}
+
+% 5
+\begin{frame}{Work Done}
+  The system utilizes a modern, modular client-server architecture:
+  \begin{itemize}
+    \item \textbf{Backend REST API:} Developed using \textbf{FastAPI} (Python) and \textbf{SQLAlchemy ORM} exposing 15+ endpoints. Geofence calculations are calculated via the \textbf{Haversine formula}.
+    \item \textbf{Relational Database:} Deployed \textbf{PostgreSQL} with 9 structured tables whitelisting email domains, managing campus boundaries, storing biometric keys, tracking attendance logs, and auditing admin actions.
+    \item \textbf{Web \& Mobile Clients:} Created a native Android App (Java) with biometric prompts, and an administrative Web Console (React, Vite) for zone management.
+    \item \textbf{Security Integrations:} Pre-configured SFace and YuNet ONNX face analysis models for server-side verification; integrated Brevo API for OTP-based registration and password resets.
+  \end{itemize}
+\end{frame}
+
+% 6
+\begin{frame}{Results}
+  System testing confirms that Geo-Attend effectively manages automated attendance:
+  \begin{itemize}
+    \item \textbf{Boundary Rejection:} Verified check-ins correctly. Location tracking successfully blocked and marked checks as \texttt{rejected} when users were outside active radii (tested with 50m, 70m, and 100m limits).
+    \item \textbf{Comprehensive Seeding:} Seeded database with 50+ users and historical shift logs to validate analytics, rendering of maps, and dashboard state management.
+    \item \textbf{Accountability and Safety:} All geofence adjustments, domain whitelisting, and user role updates automatically log to the read-only \texttt{AdminActionLog} table.
+    \item \textbf{Low Latency:} FastAPI backend maintains sub-100ms response times for geolocation evaluations and authentication requests.
+  \end{itemize}
+\end{frame}
+
+\end{document}
